@@ -1,46 +1,160 @@
-<div class="l-form">
-  <div class="shape1"></div>
-  <div class="shape2"></div>
+<div class="relative h-screen overflow-hidden">
 
-  <div class="form">
-    <img src="./authentication.svg" alt="" class="form__img">
+  <div class="
+  absolute
+  rounded-[50%]
+  top-[-7rem]
+  left-[-3.5]
+  w-[200px]
+  h-[200]
+  md:w-[400px]
+  md:h-[400px]
+  md:top-[-11rem]
+  md:left-[-6.5rem]
+  bg-custom-gradient"></div>
 
-    <form action="" class="form__content">
-      <h1 class="form__title">Welcome</h1>
+  <div
+    class="
+    absolute
+    rounded-[50%]
+    w-[200px]
+    h-[200px]
+    right-[-3.5]
+    md:w-[300px]
+    md:h-[300px]
+    bottom-[-6rem]
+    md:right-[-6.5rem]
+    bg-custom-gradient
+    rotate-180"></div>
 
-      <div class="form__div form__div-one">
-        <div class="form__icon">
-          <i class='bx bx-user-circle'></i>
-        </div>
+  <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr]">
 
-        <div class="form__div-input">
-          <label for="" class="form__label">Username</label>
-          <input type="text" class="form__input">
-        </div>
-      </div>
+    <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center" src="./authentication.svg"
+         alt="">
 
-      <div class="form__div">
-        <div class="form__icon">
-          <i class='bx bx-lock' ></i>
-        </div>
+    <form action="" class="w-[290px] md:[320px]">
 
-        <div class="form__div-input">
-          <label for="" class="form__label">Password</label>
-          <input type="password" class="form__input">
-        </div>
-      </div>
-      <a href="#" class="form__forgot">Forgot Password?</a>
+      <h1 class="text-4xl font-medium mb-8 md:text-[2.5rem] ">Welcome</h1>
 
-      <input type="submit" class="form__button" value="Login">
+      <mat-form-field class="w-full ">
+        <mat-label class="">User Name</mat-label>
+        <input
+          type="text"
+          class="text-custom-gray"
+          matInput
 
-      <div class="form__social">
-        <span class="form__social-text">Our login with</span>
+          [formControl]="usernameFormControl"
+          [errorStateMatcher]="matcher">
 
-        <a href="#" class="form__social-icon"><i class='bx bxl-facebook' ></i></a>
-        <a href="#" class="form__social-icon"><i class='bx bxl-google' ></i></a>
-        <a href="#" class="form__social-icon"><i class='bx bxl-instagram' ></i></a>
+        <mat-icon class="text-custom-gray" matPrefix >account_circle</mat-icon>
+        @if (usernameFormControl.hasError('email') && usernameFormControl.hasError('required')) {
+          <mat-error>Please enter a valid User name address</mat-error>
+        }
+        @if (usernameFormControl.hasError('required')) {
+          <mat-error>User name is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+
+      <mat-form-field class="w-full">
+        <mat-label class="">Password</mat-label>
+        <input class="text-custom-gray " type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+        <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
+        @if (passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')) {
+          <mat-error>Please enter a valid email address</mat-error>
+        }
+        @if (passwordFormControl.hasError('required')) {
+          <mat-error>Password is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <a
+        href="#"
+        class="
+          block
+          text-right
+          mb-8
+          font-medium
+          text-custom-gray
+          hover:text-custom-blue
+        ">Forgot Password?</a>
+
+      <input
+        type="submit"
+        value="Login"
+        class="
+        w-full
+        p-4
+        border-none
+        outline-none
+        mb-3
+        text-white
+        bg-custom-blue
+        rounded-[0.5rem]
+        cursor-pointer
+        hover:shadow-xl">
+
+      <div class="text-center">
+        <a
+          routerLink="/register"
+          class="
+          block
+          mb-6
+          font-medium
+          text-custom-gray
+          hover:text-custom-blue
+        ">register</a>
+        <span class="block mb-4">Our login with</span>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue">
+          <i class='bx bxl-facebook'></i>
+        </a>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue"><i class='bx bxl-google'></i></a>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue">
+          <i class='bx bxl-instagram'></i>
+        </a>
       </div>
     </form>
   </div>
-
 </div>
