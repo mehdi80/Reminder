@@ -1,5 +1,221 @@
-<form >
-  <input type="email" [(ngModel)]="email" placeholder="Email" name="email" required>
-  <input type="password" [(ngModel)]="password" placeholder="Password" name="password" required>
-  <button type="submit">Register</button>
-</form>
+<div class="relative h-screen overflow-hidden">
+
+  <div class="
+  absolute
+  rounded-[50%]
+  top-[-7rem]
+  left-[-3.5]
+  w-[200px]
+  h-[200]
+  md:w-[400px]
+  md:h-[400px]
+  md:top-[-11rem]
+  md:left-[-6.5rem]
+  bg-custom-gradient"></div>
+
+  <div
+    class="
+    absolute
+    rounded-[50%]
+    w-[200px]
+    h-[200px]
+    right-[-3.5]
+    md:w-[300px]
+    md:h-[300px]
+    bottom-[-6rem]
+    md:right-[-6.5rem]
+    bg-custom-gradient
+    rotate-180"></div>
+
+  <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr]">
+
+    <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center" src="./authentication.svg"
+         alt="">
+
+    <form action="" class="w-[290px] md:w-[400px] grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <h1 class="text-4xl font-medium mb-4 md:text-[2.5rem] col-span-2">Welcome</h1>
+
+
+        <mat-form-field class="">
+          <mat-label class="">first Name</mat-label>
+          <input class="text-custom-gray " type="text" matInput [formControl]="firstNameFormControl" [errorStateMatcher]="matcher">
+          @if (firstNameFormControl.hasError('password') && !firstNameFormControl.hasError('required')) {
+            <mat-error>First name is <strong>required</strong></mat-error>
+          }
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>The First name must be more than <strong> three letters. </strong> </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">lastName</mat-label>
+          <input class="text-custom-gray " type="lastName" matInput [formControl]="lastNameFormControl" [errorStateMatcher]="matcher">
+          @if (lastNameFormControl.hasError('password') && !lastNameFormControl.hasError('required')) {
+            <mat-error>Last name is <strong>required</strong></mat-error>
+          }
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>The Last name must be more than <strong> three letters. </strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">age</mat-label>
+          <input class="text-custom-gray " type="number" matInput [formControl]="ageFormControl" [errorStateMatcher]="matcher">
+          @if (ageFormControl.hasError('password') && !ageFormControl.hasError('required')) {
+            <mat-error>Please enter a valid email address</mat-error>
+          }
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>age is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">Email</mat-label>
+          <input class="text-custom-gray " type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+          <mat-icon class="text-custom-gray" matPrefix >mail</mat-icon>
+          @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+            <mat-error>Please enter a valid email address</mat-error>
+          }
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>email is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">Phone Number</mat-label>
+          <input class="text-custom-gray " type="number" matInput [formControl]="phoneNumberFormControl" [errorStateMatcher]="matcher">
+          <mat-icon class="text-custom-gray" matPrefix >add_call</mat-icon>
+          @if (phoneNumberFormControl.hasError('phone') && !phoneNumberFormControl.hasError('required')) {
+            <mat-error>Please enter a valid Phone number</mat-error>
+          }
+          @if (phoneNumberFormControl.hasError('required')) {
+            <mat-error>Phone number is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+      <mat-form-field class="w-full ">
+        <mat-label class="">User Name</mat-label>
+        <input
+          type="text"
+          class="text-custom-gray"
+          matInput
+
+          [formControl]="usernameFormControl"
+          [errorStateMatcher]="matcher">
+
+        <mat-icon class="text-custom-gray" matPrefix >account_circle</mat-icon>
+        @if (usernameFormControl.hasError('email') && usernameFormControl.hasError('required')) {
+          <mat-error>Please enter a valid User name address</mat-error>
+        }
+        @if (usernameFormControl.hasError('required')) {
+          <mat-error>User name is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">Password</mat-label>
+          <input class="text-custom-gray " type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+          <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
+          @if (passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')) {
+            <mat-error>Please enter a valid password</mat-error>
+          }
+          @if (passwordFormControl.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="">Re-Password</mat-label>
+          <input class="text-custom-gray " type="password" matInput [formControl]="rePasswordFormControl" [errorStateMatcher]="matcher">
+          <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
+          @if (rePasswordFormControl.hasError('password') && !rePasswordFormControl.hasError('required')) {
+            <mat-error>The password does not match its repetition.</mat-error>
+          }
+          @if (rePasswordFormControl.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+      <a
+        href="#"
+        class="
+          block
+          mb-4
+          font-medium
+          text-custom-gray
+          hover:text-custom-blue
+        ">Forgot Password?</a>
+
+      <input
+        type="submit"
+        value="Login"
+        class="
+        p-4
+        border-none
+        outline-none
+        mb-5
+        text-white
+        bg-custom-blue
+        rounded-[0.5rem]
+        cursor-pointer
+        hover:shadow-xl
+        col-span-2">
+
+      <div class="text-center col-span-2">
+        <span class="block mb-2">Our login with</span>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue">
+          <i class='bx bxl-facebook'></i>
+        </a>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue">
+          <i class='bx bxl-google'></i>
+        </a>
+
+        <a href="#"
+           class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue">
+          <i class='bx bxl-instagram'></i>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
