@@ -1,98 +1,169 @@
 <div class="relative h-screen overflow-hidden">
 
-  <div class="
-  absolute
-  rounded-[50%]
-  top-[-7rem]
-  left-[-3.5]
-  w-[200px]
-  h-[200]
-  md:w-[400px]
-  md:h-[400px]
-  md:top-[-11rem]
-  md:left-[-6.5rem]
-  bg-custom-gradient"></div>
+  <div
+    class="
+        absolute
+        rounded-[50%]
+        top-[-7rem]
+        left-[-3.5]
+        w-[200px]
+        h-[200]
+        md:w-[400px]
+        md:h-[400px]
+        md:top-[-11rem]
+        md:left-[-6.5rem]
+        bg-custom-gradient"
+  ></div>
 
   <div
     class="
-    absolute
-    rounded-[50%]
-    w-[200px]
-    h-[200px]
-    right-[-3.5]
-    md:w-[300px]
-    md:h-[300px]
-    bottom-[-6rem]
-    md:right-[-6.5rem]
-    bg-custom-gradient
-    rotate-180"></div>
+        absolute
+        rounded-[50%]
+        w-[200px]
+        h-[200px]
+        right-[-3.5]
+        md:w-[300px]
+        md:h-[300px]
+        bottom-[-6rem]
+        md:right-[-6.5rem]
+        bg-custom-gradient
+        rotate-180"
+  ></div>
 
   <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr]">
 
-    <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center" src="./authentication.svg"
-         alt="">
+    <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center"
+         src="./authentication.svg"
+         alt=""
+    >
 
-    <form action="" class="w-[290px] md:w-[400px] grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form
+      [formGroup]="form"
+      class="w-[290px] md:w-[400px] grid grid-cols-1 md:grid-cols-2 gap-4"
+    >
 
       <h1 class="text-4xl font-medium mb-4 md:text-[2.5rem] col-span-2">Welcome</h1>
 
+      <mat-form-field class="">
+        <mat-label class="">first Name</mat-label>
+        <input
+          class="text-custom-gray "
+          type="text" matInput
+          formControlName="firstNameFormControl"
+          [errorStateMatcher]="matcher"
+        >
 
-        <mat-form-field class="">
-          <mat-label class="">first Name</mat-label>
-          <input class="text-custom-gray " type="text" matInput [formControl]="firstNameFormControl" [errorStateMatcher]="matcher">
-          @if (firstNameFormControl.hasError('password') && !firstNameFormControl.hasError('required')) {
-            <mat-error>First name is <strong>required</strong></mat-error>
-          }
-          @if (passwordFormControl.hasError('required')) {
-            <mat-error>The First name must be more than <strong> three letters. </strong> </mat-error>
-          }
-        </mat-form-field>
+        @if (form.get('firstNameFormControl')?.hasError('minlength') &&
+        !form.get('firstNameFormControl')?.hasError('required')) {
+          <mat-error>The First name must be more than <strong> 4 letters. </strong></mat-error>
+        }
+        @if (form.get('firstNameFormControl')?.hasError('pattern') &&
+        !form.get('firstNameFormControl')?.hasError('required')) {
+          <mat-error>
 
-        <mat-form-field class="w-full">
-          <mat-label class="">lastName</mat-label>
-          <input class="text-custom-gray " type="lastName" matInput [formControl]="lastNameFormControl" [errorStateMatcher]="matcher">
-          @if (lastNameFormControl.hasError('password') && !lastNameFormControl.hasError('required')) {
-            <mat-error>Last name is <strong>required</strong></mat-error>
-          }
-          @if (passwordFormControl.hasError('required')) {
-            <mat-error>The Last name must be more than <strong> three letters. </strong></mat-error>
-          }
-        </mat-form-field>
+            <strong>Only letters allowed</strong>
+          </mat-error>
+        }
+        @if (form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>
+            First name is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
 
-        <mat-form-field class="w-full">
-          <mat-label class="">age</mat-label>
-          <input class="text-custom-gray " type="number" matInput [formControl]="ageFormControl" [errorStateMatcher]="matcher">
-          @if (ageFormControl.hasError('password') && !ageFormControl.hasError('required')) {
-            <mat-error>Please enter a valid email address</mat-error>
-          }
-          @if (passwordFormControl.hasError('required')) {
-            <mat-error>age is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label class="">lastName</mat-label>
+        <input
+          class="text-custom-gray "
+          type="text"
+          matInput formControlName="lastNameFormControl"
+          [errorStateMatcher]="matcher"
+        >
 
-        <mat-form-field class="w-full">
-          <mat-label class="">Email</mat-label>
-          <input class="text-custom-gray " type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher">
-          <mat-icon class="text-custom-gray" matPrefix >mail</mat-icon>
-          @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-            <mat-error>Please enter a valid email address</mat-error>
-          }
-          @if (passwordFormControl.hasError('required')) {
-            <mat-error>email is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+        @if (form.get('lastNameFormControl')?.hasError('minlength') &&
+        !form.get('lastNameFormControl')?.hasError('required')) {
+          <mat-error>
+            The Last name must be more than <strong> 4 letters. </strong>
+          </mat-error>
+        }
+        @if (form.get('lastNameFormControl')?.hasError('pattern') &&
+        !form.get('lastNameFormControl')?.hasError('required')) {
 
-        <mat-form-field class="w-full">
-          <mat-label class="">Phone Number</mat-label>
-          <input class="text-custom-gray " type="number" matInput [formControl]="phoneNumberFormControl" [errorStateMatcher]="matcher">
-          <mat-icon class="text-custom-gray" matPrefix >add_call</mat-icon>
-          @if (phoneNumberFormControl.hasError('phone') && !phoneNumberFormControl.hasError('required')) {
-            <mat-error>Please enter a valid Phone number</mat-error>
-          }
-          @if (phoneNumberFormControl.hasError('required')) {
-            <mat-error>Phone number is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+          <mat-error>
+            <strong>Only letters allowed</strong>
+          </mat-error>
+        }
+        @if (form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>Last name is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label class="">age</mat-label>
+        <mat-icon class="text-custom-gray" matPrefix>date_range</mat-icon>
+        <input class="text-custom-gray "
+               type="text"
+               matInput
+               formControlName="ageFormControl"
+               [errorStateMatcher]="matcher"
+        >
+
+        @if (form.get('ageFormControl')?.hasError('min') &&
+        !form.get('ageFormControl')?.hasError('required')) {
+          <mat-error>Minimum age is 18</mat-error>
+        }
+        @if (form.get('ageFormControl')?.hasError('max') &&
+        !form.get('ageFormControl')?.hasError('required')) {
+          <mat-error>Maximum age is 100</mat-error>
+        }
+        @if (form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>age is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label class="">Email</mat-label>
+        <input
+          class="text-custom-gray "
+          type="email"
+          matInput
+          formControlName="emailFormControl"
+          [errorStateMatcher]="matcher"
+        >
+        <mat-icon class="text-custom-gray" matPrefix>mail</mat-icon>
+        @if (form.get('emailFormControl')?.hasError('email')
+        && !form.get('emailFormControl')?.hasError('required')) {
+          <mat-error>
+            Please enter a valid email address
+          </mat-error>
+        }
+        @if (form.get('emailFormControl')?.hasError('required')) {
+          <mat-error>
+            email is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label class="">Phone Number</mat-label>
+        <input
+          class="text-custom-gray "
+          type="text"
+          matInput
+          formControlName="phoneNumberFormControl"
+          [errorStateMatcher]="matcher"
+        >
+        <mat-icon class="text-custom-gray" matPrefix>add_call</mat-icon>
+        @if (form.get('phoneNumberFormControl')?.hasError('pattern')
+        && !form.get('phoneNumberFormControl')?.hasError('required')) {
+          <mat-error>Please enter a valid Phone number</mat-error>
+        }
+        @if (form.get('phoneNumberFormControl')?.hasError('required')) {
+          <mat-error>
+            Phone number is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
 
       <mat-form-field class="w-full ">
         <mat-label class="">User Name</mat-label>
@@ -100,42 +171,68 @@
           type="text"
           class="text-custom-gray"
           matInput
+          formControlName="usernameFormControl"
+          [errorStateMatcher]="matcher"
+        >
 
-          [formControl]="usernameFormControl"
-          [errorStateMatcher]="matcher">
+        <mat-icon class="text-custom-gray" matPrefix>account_circle</mat-icon>
 
-        <mat-icon class="text-custom-gray" matPrefix >account_circle</mat-icon>
-        @if (usernameFormControl.hasError('email') && usernameFormControl.hasError('required')) {
-          <mat-error>Please enter a valid User name address</mat-error>
+        @if (form.get('usernameFormControl')?.hasError('minlength') &&
+        !form.get('usernameFormControl')?.hasError('required')) {
+          <mat-error>At least 6 characters</mat-error>
         }
-        @if (usernameFormControl.hasError('required')) {
+        @if (form.get('usernameFormControl')?.hasError('pattern') &&
+        !form.get('usernameFormControl')?.hasError('required')) {
+          <mat-error>Only letters and numbers allowed</mat-error>
+        }
+        @if (form.get('usernameFormControl')?.hasError('required')) {
           <mat-error>User name is <strong>required</strong></mat-error>
         }
       </mat-form-field>
 
-        <mat-form-field class="w-full">
-          <mat-label class="">Password</mat-label>
-          <input class="text-custom-gray " type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
-          <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
-          @if (passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')) {
-            <mat-error>Please enter a valid password</mat-error>
-          }
-          @if (passwordFormControl.hasError('required')) {
-            <mat-error>Password is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label class="">Password</mat-label>
+        <input
+          class="text-custom-gray "
+          type="password"
+          matInput
+          formControlName="passwordFormControl"
+          [errorStateMatcher]="matcher"
+        >
+        <mat-icon class="text-custom-gray" matPrefix>lock</mat-icon>
+        @if (form.get('passwordFormControl')?.hasError('minlength')
+        && !form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>At least 8 characters</mat-error>
+        }
+        @if (form.get('passwordFormControl')?.hasError('pattern')
+        && !form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>Must contain uppercase, lowercase, number, and special character</mat-error>
+        }
+        @if (form.get('passwordFormControl')?.hasError('required')) {
+          <mat-error>
+            Password is <strong>required</strong>
+          </mat-error>
+        }
+      </mat-form-field>
 
-        <mat-form-field class="w-full">
-          <mat-label class="">Re-Password</mat-label>
-          <input class="text-custom-gray " type="password" matInput [formControl]="rePasswordFormControl" [errorStateMatcher]="matcher">
-          <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
-          @if (rePasswordFormControl.hasError('password') && !rePasswordFormControl.hasError('required')) {
-            <mat-error>The password does not match its repetition.</mat-error>
-          }
-          @if (rePasswordFormControl.hasError('required')) {
-            <mat-error>Password is <strong>required</strong></mat-error>
-          }
-        </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label class="">Re-Password</mat-label>
+        <input
+          class="text-custom-gray "
+          type="password"
+          matInput
+          formControlName="rePasswordFormControl"
+          [errorStateMatcher]="matcher"
+        >
+        <mat-icon class="text-custom-gray" matPrefix>lock</mat-icon>
+        @if (form.get('rePasswordFormControl')?.hasError('notMatching') &&
+        !form.get('rePasswordFormControl')?.hasError('required')) {
+          <mat-error>The password does not match its repetition.</mat-error>
+        }
+        @if (form.get('rePasswordFormControl')?.hasError('required')) {
+          <mat-error>Confirm your password</mat-error>
+        }
+      </mat-form-field>
 
       <a
         href="#"
@@ -145,7 +242,10 @@
           font-medium
           text-custom-gray
           hover:text-custom-blue
-        ">Forgot Password?</a>
+        "
+      >
+        Forgot Password?
+      </a>
 
       <input
         type="submit"
@@ -160,7 +260,9 @@
         rounded-[0.5rem]
         cursor-pointer
         hover:shadow-xl
-        col-span-2">
+        col-span-2"
+        [disabled]="form.invalid"
+      >
 
       <div class="text-center col-span-2">
         <span class="block mb-2">Our login with</span>
@@ -178,7 +280,8 @@
            rounded-[50%]
            text-white
            text-xl
-           hover:bg-custom-blue">
+           hover:bg-custom-blue"
+        >
           <i class='bx bxl-facebook'></i>
         </a>
 
@@ -195,7 +298,8 @@
            rounded-[50%]
            text-white
            text-xl
-           hover:bg-custom-blue">
+           hover:bg-custom-blue"
+        >
           <i class='bx bxl-google'></i>
         </a>
 
@@ -212,7 +316,8 @@
            rounded-[50%]
            text-white
            text-xl
-           hover:bg-custom-blue">
+           hover:bg-custom-blue"
+        >
           <i class='bx bxl-instagram'></i>
         </a>
       </div>
