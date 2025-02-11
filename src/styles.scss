@@ -29,3 +29,15 @@ html {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-snackbar-surface {
+  background:none !important;
+  box-shadow: none !important;
+
+}
+.mdc-snackbar__label{
+  padding: 0 !important;
+}
+//.mat-mdc-snack-bar-container{
+//  margin: 0 !important;
+//}
