@@ -30,7 +30,7 @@
         rotate-180"
   ></div>
 
-  <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr]">
+  <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr] overflow-auto">
 
     <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center"
          src="./authentication.svg"
@@ -39,6 +39,7 @@
 
     <form
       [formGroup]="form"
+      (ngSubmit)="register()"
       class="w-[290px] md:w-[400px] grid grid-cols-1 md:grid-cols-2 gap-4"
     >
 
@@ -49,22 +50,22 @@
         <input
           class="text-custom-gray "
           type="text" matInput
-          formControlName="firstNameFormControl"
+          formControlName="firstName"
           [errorStateMatcher]="matcher"
         >
 
-        @if (form.get('firstNameFormControl')?.hasError('minlength') &&
-        !form.get('firstNameFormControl')?.hasError('required')) {
+        @if (form.get('firstName')?.hasError('minlength') &&
+        !form.get('firstName')?.hasError('required')) {
           <mat-error>The First name must be more than <strong> 4 letters. </strong></mat-error>
         }
-        @if (form.get('firstNameFormControl')?.hasError('pattern') &&
-        !form.get('firstNameFormControl')?.hasError('required')) {
+        @if (form.get('firstName')?.hasError('pattern') &&
+        !form.get('firstName')?.hasError('required')) {
           <mat-error>
 
             <strong>Only letters allowed</strong>
           </mat-error>
         }
-        @if (form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('required')) {
           <mat-error>
             First name is <strong>required</strong>
           </mat-error>
@@ -76,24 +77,24 @@
         <input
           class="text-custom-gray "
           type="text"
-          matInput formControlName="lastNameFormControl"
+          matInput formControlName="lastName"
           [errorStateMatcher]="matcher"
         >
 
-        @if (form.get('lastNameFormControl')?.hasError('minlength') &&
-        !form.get('lastNameFormControl')?.hasError('required')) {
+        @if (form.get('lastName')?.hasError('minlength') &&
+        !form.get('lastName')?.hasError('required')) {
           <mat-error>
             The Last name must be more than <strong> 4 letters. </strong>
           </mat-error>
         }
-        @if (form.get('lastNameFormControl')?.hasError('pattern') &&
-        !form.get('lastNameFormControl')?.hasError('required')) {
+        @if (form.get('lastName')?.hasError('pattern') &&
+        !form.get('lastName')?.hasError('required')) {
 
           <mat-error>
             <strong>Only letters allowed</strong>
           </mat-error>
         }
-        @if (form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('required')) {
           <mat-error>Last name is <strong>required</strong></mat-error>
         }
       </mat-form-field>
@@ -104,19 +105,19 @@
         <input class="text-custom-gray "
                type="text"
                matInput
-               formControlName="ageFormControl"
+               formControlName="age"
                [errorStateMatcher]="matcher"
         >
 
-        @if (form.get('ageFormControl')?.hasError('min') &&
-        !form.get('ageFormControl')?.hasError('required')) {
+        @if (form.get('age')?.hasError('min') &&
+        !form.get('age')?.hasError('required')) {
           <mat-error>Minimum age is 18</mat-error>
         }
-        @if (form.get('ageFormControl')?.hasError('max') &&
-        !form.get('ageFormControl')?.hasError('required')) {
+        @if (form.get('age')?.hasError('max') &&
+        !form.get('age')?.hasError('required')) {
           <mat-error>Maximum age is 100</mat-error>
         }
-        @if (form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('required')) {
           <mat-error>age is <strong>required</strong></mat-error>
         }
       </mat-form-field>
@@ -127,17 +128,17 @@
           class="text-custom-gray "
           type="email"
           matInput
-          formControlName="emailFormControl"
+          formControlName="email"
           [errorStateMatcher]="matcher"
         >
         <mat-icon class="text-custom-gray" matPrefix>mail</mat-icon>
-        @if (form.get('emailFormControl')?.hasError('email')
-        && !form.get('emailFormControl')?.hasError('required')) {
+        @if (form.get('email')?.hasError('email')
+        && !form.get('email')?.hasError('required')) {
           <mat-error>
             Please enter a valid email address
           </mat-error>
         }
-        @if (form.get('emailFormControl')?.hasError('required')) {
+        @if (form.get('email')?.hasError('required')) {
           <mat-error>
             email is <strong>required</strong>
           </mat-error>
@@ -150,15 +151,15 @@
           class="text-custom-gray "
           type="text"
           matInput
-          formControlName="phoneNumberFormControl"
+          formControlName="phoneNumber"
           [errorStateMatcher]="matcher"
         >
         <mat-icon class="text-custom-gray" matPrefix>add_call</mat-icon>
-        @if (form.get('phoneNumberFormControl')?.hasError('pattern')
-        && !form.get('phoneNumberFormControl')?.hasError('required')) {
+        @if (form.get('phoneNumber')?.hasError('pattern')
+        && !form.get('phoneNumber')?.hasError('required')) {
           <mat-error>Please enter a valid Phone number</mat-error>
         }
-        @if (form.get('phoneNumberFormControl')?.hasError('required')) {
+        @if (form.get('phoneNumber')?.hasError('required')) {
           <mat-error>
             Phone number is <strong>required</strong>
           </mat-error>
@@ -171,21 +172,21 @@
           type="text"
           class="text-custom-gray"
           matInput
-          formControlName="usernameFormControl"
+          formControlName="username"
           [errorStateMatcher]="matcher"
         >
 
         <mat-icon class="text-custom-gray" matPrefix>account_circle</mat-icon>
 
-        @if (form.get('usernameFormControl')?.hasError('minlength') &&
-        !form.get('usernameFormControl')?.hasError('required')) {
+        @if (form.get('username')?.hasError('minlength') &&
+        !form.get('username')?.hasError('required')) {
           <mat-error>At least 6 characters</mat-error>
         }
-        @if (form.get('usernameFormControl')?.hasError('pattern') &&
-        !form.get('usernameFormControl')?.hasError('required')) {
+        @if (form.get('username')?.hasError('pattern') &&
+        !form.get('username')?.hasError('required')) {
           <mat-error>Only letters and numbers allowed</mat-error>
         }
-        @if (form.get('usernameFormControl')?.hasError('required')) {
+        @if (form.get('username')?.hasError('required')) {
           <mat-error>User name is <strong>required</strong></mat-error>
         }
       </mat-form-field>
@@ -196,19 +197,19 @@
           class="text-custom-gray "
           type="password"
           matInput
-          formControlName="passwordFormControl"
+          formControlName="password"
           [errorStateMatcher]="matcher"
         >
         <mat-icon class="text-custom-gray" matPrefix>lock</mat-icon>
-        @if (form.get('passwordFormControl')?.hasError('minlength')
-        && !form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('minlength')
+        && !form.get('password')?.hasError('required')) {
           <mat-error>At least 8 characters</mat-error>
         }
-        @if (form.get('passwordFormControl')?.hasError('pattern')
-        && !form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('pattern')
+        && !form.get('password')?.hasError('required')) {
           <mat-error>Must contain uppercase, lowercase, number, and special character</mat-error>
         }
-        @if (form.get('passwordFormControl')?.hasError('required')) {
+        @if (form.get('password')?.hasError('required')) {
           <mat-error>
             Password is <strong>required</strong>
           </mat-error>
@@ -221,15 +222,15 @@
           class="text-custom-gray "
           type="password"
           matInput
-          formControlName="rePasswordFormControl"
+          formControlName="rePassword"
           [errorStateMatcher]="matcher"
         >
         <mat-icon class="text-custom-gray" matPrefix>lock</mat-icon>
-        @if (form.get('rePasswordFormControl')?.hasError('notMatching') &&
-        !form.get('rePasswordFormControl')?.hasError('required')) {
+        @if (form.get('rePassword')?.hasError('notMatching') &&
+        !form.get('rePassword')?.hasError('required')) {
           <mat-error>The password does not match its repetition.</mat-error>
         }
-        @if (form.get('rePasswordFormControl')?.hasError('required')) {
+        @if (form.get('rePassword')?.hasError('required')) {
           <mat-error>Confirm your password</mat-error>
         }
       </mat-form-field>
@@ -249,7 +250,7 @@
 
       <input
         type="submit"
-        value="Login"
+        value="Register"
         class="
         p-4
         border-none
