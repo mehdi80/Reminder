@@ -1,17 +1,20 @@
 <div class="relative h-screen overflow-hidden">
 
-  <div class="
-  absolute
-  rounded-[50%]
-  top-[-7rem]
-  left-[-3.5]
-  w-[200px]
-  h-[200]
-  md:w-[400px]
-  md:h-[400px]
-  md:top-[-11rem]
-  md:left-[-6.5rem]
-  bg-custom-gradient"></div>
+  <div
+    class="
+      absolute
+      rounded-[50%]
+      top-[-7rem]
+      left-[-3.5]
+      w-[200px]
+      h-[200]
+      md:w-[400px]
+      md:h-[400px]
+      md:top-[-11rem]
+      md:left-[-6.5rem]
+      bg-custom-gradient">
+
+  </div>
 
   <div
     class="
@@ -32,7 +35,7 @@
     <img class="h-auto hidden max-w-full md:block md:w-[700px] md:justify-self-center" src="./authentication.svg"
          alt="">
 
-    <form action="" class="w-[290px] md:w-[320px]">
+    <form [formGroup]="login" (ngSubmit)="onSubmit()" class="w-[290px] md:w-[320px]">
 
       <h1 class="text-4xl font-medium mb-8 md:text-[2.5rem] ">Welcome</h1>
 
@@ -42,15 +45,14 @@
           type="text"
           class="text-custom-gray"
           matInput
-
-          [formControl]="usernameFormControl"
+          formControlName="username"
           [errorStateMatcher]="matcher">
 
         <mat-icon class="text-custom-gray" matPrefix >account_circle</mat-icon>
-        @if (usernameFormControl.hasError('email') && usernameFormControl.hasError('required')) {
-          <mat-error>Please enter a valid User name address</mat-error>
+        @if (login.get('username')?.hasError('minlength') && !login.get('username')?.hasError('required')) {
+          <mat-error>Please enter a valid Username</mat-error>
         }
-        @if (usernameFormControl.hasError('required')) {
+        @if (login.get('username')?.hasError('required')) {
           <mat-error>User name is <strong>required</strong></mat-error>
         }
       </mat-form-field>
@@ -58,12 +60,17 @@
 
       <mat-form-field class="w-full">
         <mat-label class="">Password</mat-label>
-        <input class="text-custom-gray " type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+        <input
+          class="text-custom-gray "
+          type="password"
+          matInput
+          formControlName="password"
+          [errorStateMatcher]="matcher">
         <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
-        @if (passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')) {
-          <mat-error>Please enter a valid email address</mat-error>
+        @if (login.get('password')?.hasError('pattern') && !login.get('password')?.hasError('required')) {
+          <mat-error>Please enter a valid password</mat-error>
         }
-        @if (passwordFormControl.hasError('required')) {
+        @if (login.get('password')?.hasError('required')) {
           <mat-error>Password is <strong>required</strong></mat-error>
         }
       </mat-form-field>
@@ -79,9 +86,8 @@
           hover:text-custom-blue
         ">Forgot Password?</a>
 
-      <input
+      <button
         type="submit"
-        value="Login"
         class="
         w-full
         p-4
@@ -92,7 +98,10 @@
         bg-custom-blue
         rounded-[0.5rem]
         cursor-pointer
-        hover:shadow-xl">
+        hover:shadow-xl"
+        [disabled]="login.invalid || loading">
+        {{ loading ? 'Processing...' : 'login' }}
+      </button>
 
       <div class="text-center">
         <a
