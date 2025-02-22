@@ -1,0 +1,25 @@
+<div class="text-center ">
+  <span class="block mb-2">
+    Or login with
+  </span>
+
+  @for (option of socialOptions; track option.name){
+    <a [href]="option.link"
+       class="
+           inline-flex
+           justify-center
+           items-center
+           w-[30px]
+           h-[30px]
+           mr-4
+           p-2
+           bg-custom-gray
+           rounded-[50%]
+           text-white
+           text-xl
+           hover:bg-custom-blue"
+    >
+      <i [class]="'bx' + ' ' +option.icon"></i>
+    </a>
+  }
+</div>
