@@ -1,34 +1,6 @@
 <div class="relative h-screen overflow-hidden">
 
-  <div
-    class="
-      absolute
-      rounded-[50%]
-      top-[-7rem]
-      left-[-3.5]
-      w-[200px]
-      h-[200]
-      md:w-[400px]
-      md:h-[400px]
-      md:top-[-11rem]
-      md:left-[-6.5rem]
-      bg-custom-gradient">
-
-  </div>
-
-  <div
-    class="
-    absolute
-    rounded-[50%]
-    w-[200px]
-    h-[200px]
-    right-[-3.5]
-    md:w-[300px]
-    md:h-[300px]
-    bottom-[-6rem]
-    md:right-[-6.5rem]
-    bg-custom-gradient
-    rotate-180"></div>
+<app-circles></app-circles>
 
   <div class=" h-screen grid justify-center items-center px-3 md:px-8 md:grid-cols-[1.5fr_1fr]">
 
@@ -39,41 +11,10 @@
 
       <h1 class="text-4xl font-medium mb-8 md:text-[2.5rem] ">Welcome</h1>
 
-      <mat-form-field class="w-full ">
-        <mat-label class="">User Name</mat-label>
-        <input
-          type="text"
-          class="text-custom-gray"
-          matInput
-          formControlName="username"
-          [errorStateMatcher]="matcher">
-
-        <mat-icon class="text-custom-gray" matPrefix >account_circle</mat-icon>
-        @if (login.get('username')?.hasError('minlength') && !login.get('username')?.hasError('required')) {
-          <mat-error>Please enter a valid Username</mat-error>
-        }
-        @if (login.get('username')?.hasError('required')) {
-          <mat-error>User name is <strong>required</strong></mat-error>
-        }
-      </mat-form-field>
-
-
-      <mat-form-field class="w-full">
-        <mat-label class="">Password</mat-label>
-        <input
-          class="text-custom-gray "
-          type="password"
-          matInput
-          formControlName="password"
-          [errorStateMatcher]="matcher">
-        <mat-icon class="text-custom-gray" matPrefix >lock</mat-icon>
-        @if (login.get('password')?.hasError('pattern') && !login.get('password')?.hasError('required')) {
-          <mat-error>Please enter a valid password</mat-error>
-        }
-        @if (login.get('password')?.hasError('required')) {
-          <mat-error>Password is <strong>required</strong></mat-error>
-        }
-      </mat-form-field>
+      @for (field of inputFields; track field.label) {
+        <app-input-field [control]="field.control" [icon]="field.icon" [type]="field.type"
+                         [label]="field.label"></app-input-field>
+      }
 
       <a
         href="#"
@@ -86,22 +27,7 @@
           hover:text-custom-blue
         ">Forgot Password?</a>
 
-      <button
-        type="submit"
-        class="
-        w-full
-        p-4
-        border-none
-        outline-none
-        mb-3
-        text-white
-        bg-custom-blue
-        rounded-[0.5rem]
-        cursor-pointer
-        hover:shadow-xl"
-        [disabled]="login.invalid || loading">
-        {{ loading ? 'Processing...' : 'login' }}
-      </button>
+      <app-button class="" [classes]="'w-full'" [disabled]="login.invalid || loading()" [text]=" loading() ? 'Processing...' : 'login' "></app-button>
 
       <div class="text-center">
         <a
@@ -113,56 +39,10 @@
           text-custom-gray
           hover:text-custom-blue
         ">register</a>
-        <span class="block mb-4">Our login with</span>
 
-        <a href="#"
-           class="
-           inline-flex
-           justify-center
-           items-center
-           w-[30px]
-           h-[30px]
-           mr-4
-           p-2
-           bg-custom-gray
-           rounded-[50%]
-           text-white
-           text-xl
-           hover:bg-custom-blue">
-          <i class='bx bxl-facebook'></i>
-        </a>
-
-        <a href="#"
-           class="
-           inline-flex
-           justify-center
-           items-center
-           w-[30px]
-           h-[30px]
-           mr-4
-           p-2
-           bg-custom-gray
-           rounded-[50%]
-           text-white
-           text-xl
-           hover:bg-custom-blue"><i class='bx bxl-google'></i></a>
-
-        <a href="#"
-           class="
-           inline-flex
-           justify-center
-           items-center
-           w-[30px]
-           h-[30px]
-           mr-4
-           p-2
-           bg-custom-gray
-           rounded-[50%]
-           text-white
-           text-xl
-           hover:bg-custom-blue">
-          <i class='bx bxl-instagram'></i>
-        </a>
+        <app-social-links
+          [socialOptions]="socialOptions()"
+          class="text-center col-span-2"></app-social-links>
       </div>
     </form>
   </div>
