@@ -33,7 +33,7 @@ export class AuthService {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
-  login(username: string, password: string): Observable<boolean> {
+  login(username: string|null|undefined, password: string|null|undefined): Observable<boolean> {
     return this.users$.pipe(
       map((users: User[]): boolean => {
         const user = users.find(u => u.username === username && u.password === password);
