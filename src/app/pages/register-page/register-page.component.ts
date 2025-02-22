@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {
   AbstractControl,
   FormControl, FormGroup,
@@ -8,15 +8,16 @@ import {
   ReactiveFormsModule, ValidatorFn,
   Validators
 } from '@angular/forms';
-import {MatError, MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {MatIcon} from '@angular/material/icon';
 import {UserService} from '../../services/user.service';
-import {BehaviorSubject} from 'rxjs';
 import {User} from '../../models/User';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {SnackbarService} from '../../services/snackbar.service';
+import {CirclesComponent} from '../../common/circles/circles.component';
+import {SocialLinksComponent} from '../../common/social-links/social-links.component';
+import {InputFieldComponent} from '../../common/input-field/input-field.component';
+import {ButtonComponent} from '../../common/button/button.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -46,12 +47,11 @@ export function matchPasswords(password: string, rePassword: string): ValidatorF
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatError,
-    MatIcon,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CirclesComponent,
+    SocialLinksComponent,
+    InputFieldComponent,
+    ButtonComponent
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss'
@@ -63,11 +63,14 @@ export class RegisterPageComponent implements OnInit {
   ) {
   }
 
-  users!: User[];
-  usernameExists: boolean = false;
-  emailExists: boolean = false;
-  matcher = new MyErrorStateMatcher();
-  isSubmitting = new BehaviorSubject<boolean>(false);
+  socialOptions = signal([
+    {name: 'Facebook', icon: 'bxl-facebook', link: '#'},
+    {name: 'Google', icon: 'bxl-google', link: '#'},
+    {name: 'Instagram', icon: 'bxl-instagram', link: '#'}
+  ])
+
+  users: WritableSignal<User[]> = signal([]);
+  isSubmitting: WritableSignal<boolean> = signal(false);
 
   form = new FormGroup(
     {
@@ -135,30 +138,29 @@ export class RegisterPageComponent implements OnInit {
     {validators: matchPasswords('passwordFormControl', 'rePasswordFormControl')}
   );
 
+  inputFields =signal( [
+    {type: 'text ', control:this.form.controls['firstName'],label:'First Name',icon:''},
+    {type: 'text', control:this.form.controls['lastName'],label:'Last Name',icon:''},
+    {type: 'text', control:this.form.controls['age'],label:'Age',icon:'date_range'},
+    {type: 'email', control:this.form.controls['email'],label:'Email',icon:'mail'},
+    {type: 'text', control:this.form.controls['phoneNumber'],label:'Phone Number',icon:'add_call'},
+    {type: 'text', control:this.form.controls['username'],label:'Username',icon:'account_circle'},
+    {type: 'password', control:this.form.controls['password'],label:'Password',icon:'lock'},
+    {type: 'password', control:this.form.controls['rePassword'],label:'Confirm Password',icon:'lock'},
+  ])
+
   ngOnInit() {
     this.getUser();
-
-    this.form.get('username')?.valueChanges.subscribe(value => {
-      if (this.users.some(user => user.username === value)) {
-        this._snackbar.showMessage('This username is already registered!', 'error')
-      }
-    });
-
-    this.form.get('email')?.valueChanges.subscribe(value => {
-      if (this.users.some(user => user.email === value)) {
-        this._snackbar.showMessage('This email has already been registered!', 'error')
-      }
-    });
   }
 
-  getUser() {
-    return this.userService.getUsers().subscribe(user => {
-      this.users = user;
+  getUser():void {
+    this.userService.getUsers().subscribe(users => {
+      this.users.set(users);
     })
   }
 
-  register() {
-    if (this.form.invalid || this.emailExists || this.usernameExists) return;
+  register():void {
+    if (this.form.invalid) return;
 
     const user: User = {
       username: this.form.value.username!,
@@ -170,29 +172,28 @@ export class RegisterPageComponent implements OnInit {
       email: this.form.value.email!
     }
 
-    if (this.users.some(u => u.username === user.username)) {
+    if (this.users().some(u => u.username === user.username)) {
       this._snackbar.showMessage('This username is already registered!', 'error')
 
       return;
     }
 
-    if (this.users.some(u => u.email === user.email)) {
+    if (this.users().some(u => u.email === user.email)) {
       this._snackbar.showMessage('This email has already been registered!', 'error')
       return;
     }
 
-    this.isSubmitting.next(true);
+    this.isSubmitting.set(true);
 
     this.userService.register(user).subscribe(() => {
       this._snackbar.showMessage('Registration was successful!', 'success')
 
       this.getUser();
-      this.isSubmitting.next(false);
+      this.isSubmitting.set(false);
       this.form.reset();
     }, () => {
       this._snackbar.showMessage('This email has already been registered!', 'error')
-
-      this.isSubmitting.next(false);
+      this.isSubmitting.set(false);
     })
   }
 }
