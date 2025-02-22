@@ -18,6 +18,7 @@ import {CirclesComponent} from '../../common/circles/circles.component';
 import {SocialLinksComponent} from '../../common/social-links/social-links.component';
 import {InputFieldComponent} from '../../common/input-field/input-field.component';
 import {ButtonComponent} from '../../common/button/button.component';
+import {Router} from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -59,7 +60,8 @@ export function matchPasswords(password: string, rePassword: string): ValidatorF
 export class RegisterPageComponent implements OnInit {
   constructor(
     private userService: UserService,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private router: Router,
   ) {
   }
 
@@ -160,8 +162,6 @@ export class RegisterPageComponent implements OnInit {
   }
 
   register():void {
-    if (this.form.invalid) return;
-
     const user: User = {
       username: this.form.value.username!,
       password: this.form.value.password!,
@@ -172,28 +172,29 @@ export class RegisterPageComponent implements OnInit {
       email: this.form.value.email!
     }
 
-    if (this.users().some(u => u.username === user.username)) {
-      this._snackbar.showMessage('This username is already registered!', 'error')
+    if (this.form.invalid) return;
 
+    if (this.users().some(u => u.username === user.username)) {
+      this._snackbar.showMessage('This username is already registered!', 'error');
       return;
     }
 
     if (this.users().some(u => u.email === user.email)) {
-      this._snackbar.showMessage('This email has already been registered!', 'error')
+      this._snackbar.showMessage('This email has already been registered!', 'error');
       return;
     }
 
     this.isSubmitting.set(true);
 
     this.userService.register(user).subscribe(() => {
-      this._snackbar.showMessage('Registration was successful!', 'success')
-
+      this._snackbar.showMessage('Registration was successful!', 'success');
+      this.isSubmitting.set(false);
       this.getUser();
-      this.isSubmitting.set(false);
       this.form.reset();
+      this.router.navigate(['/login']);
     }, () => {
-      this._snackbar.showMessage('This email has already been registered!', 'error')
+      this._snackbar.showMessage('This email has already been registered!', 'error');
       this.isSubmitting.set(false);
-    })
+    });
   }
 }

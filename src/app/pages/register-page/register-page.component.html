@@ -22,7 +22,7 @@
       }
 
       <div class="md:col-span-2">
-        <app-button [classes]="'w-full'" [text]="'register'" [disabled]="form.invalid"></app-button>
+        <app-button [classes]="'w-full'" [text]="'register'" [disabled]="form.invalid || isSubmitting()" [text]=" isSubmitting() ? 'Processing...' : 'register' "></app-button>
       </div>
       <app-social-links class="md:col-span-2" [socialOptions]="socialOptions()"></app-social-links>
     </form>

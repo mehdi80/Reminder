@@ -66,8 +66,8 @@ export class LoginPageComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
-      this.loading.set(true);
       const {username, password} = this.login.value;
+      this.loading.set(true);
       this.authService.login(username, password).subscribe(
         success => {
           this.loading.set(false);
